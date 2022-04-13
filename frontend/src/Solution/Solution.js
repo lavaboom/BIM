@@ -4,7 +4,7 @@ Following a team meeting, you were asked to create a table to display
 building data from a newly written endpoint (see backend /buildings/all route)
 
 Just as you are about to go home, the team leader adds:
-"I want to be able to filter data by company name"
+'I want to be able to filter data by company name'
 
 You have the freedom to solve the problem in any way you want.
 
@@ -16,12 +16,99 @@ However, use of this library is optional in this assignment.
 
 // YOUR CODE BELOW
 // ----------------------------------------------------------------------------
-
+// React related
+import React, { useState, useEffect } from 'react'
+// 3rd party libraries
+import { v4 as uuidv4 } from 'uuid';
+// styles
+import './Solution.scss';
 
 const Solution = () => {
-    return <>
-        <h1>This is my table.</h1>
-    </>
+
+    let temp = [
+        {
+            'company': 'Green Dot LLC',
+            'address': '2842 Feathers Hooves Drive',
+            'city': 'New York',
+            'state': 'NY',
+        },
+        {
+            'company': 'Green Dot LLC',
+            'address': '3406 Point Street',
+            'city': 'Chicago',
+            'state': 'IL',
+        },
+        {
+            'company': 'Green Dot LLC',
+            'address': '4401 Lilac Lane',
+            'city': 'Alamo',
+            'state': 'GA',
+        },
+        {
+            'company': 'Red Triangle Inc',
+            'address': '1524 Ross Street',
+            'city': 'New Haven',
+            'state': 'IL',
+        },
+        {
+            'company': 'Red Triangle Inc',
+            'address': '3539 Glenwood Avenue',
+            'city': 'Beachwood',
+            'state': 'OH',
+        },
+        {
+            'company': 'Red Triangle Inc',
+            'address': '423 Stiles Street',
+            'city': 'Gibsonia',
+            'state': 'PA',
+        }
+    ]
+
+    // local states
+    const [buildings, setBuildings] = useState(temp);
+
+    // fetch buildings on page load once
+    useEffect(() => {
+        
+    }, [])
+
+    /* -------------------------------------------------------------------------
+    render
+    ------------------------------------------------------------------------- */
+    return (
+        <div>
+            {/* headers area */}
+            <div className='table-functionalities'>
+                <h1 className='table-functionalities__title'>All Buildings</h1>
+                <div className='table-functionalities__wrapper'>
+                    <input className='table-functionalities__search' onChange={ () => {} } type='text' placeholder='Search...' />
+                </div>
+            </div>
+            {/* table area */}
+            <div className='table'>
+                <div className='table__header'>
+                    <h4 className='table__header-item table__header-item--warehouse'>COMPANY</h4>
+                    <h4 className='table__header-item table__header-item--address'>ADDRESS</h4>
+                </div>
+                {/* table rows */}
+                { buildings.map(item => (
+                    // each row of the table
+                    <div key={ uuidv4() } className='table__row'>
+                        {/* company name */}
+                        <div className='table__cell table__cell--company-name'>
+                            <div className='table__label'>COMPANY</div>
+                            <div>{ item.company }</div>
+                        </div>
+                        {/* building address */}
+                        <div className='table__cell table__cell--address'>
+                            <div className='table__label'>ADDRESS</div>
+                            <div>{ item.address }, { item.city }, { item.state }</div>
+                        </div>
+                    </div>
+                ))}
+            </div>
+        </div>
+    )
 }
 
 export default Solution;
