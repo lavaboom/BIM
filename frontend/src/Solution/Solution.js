@@ -20,10 +20,14 @@ However, use of this library is optional in this assignment.
 import React, { useState, useEffect } from 'react'
 // 3rd party libraries
 import { v4 as uuidv4 } from 'uuid';
+import axios from 'axios'
 // styles
 import './Solution.scss';
 
 const Solution = () => {
+
+    // use env variable if available else default to localhost
+    const apiURL = process.env.REACT_APP_API_URL || 'http://localhost:9000/buildings/all'
 
     let temp = [
         {
@@ -65,11 +69,15 @@ const Solution = () => {
     ]
 
     // local states
-    const [buildings, setBuildings] = useState(temp);
+    const [buildings, setBuildings] = useState([]);
 
     // fetch buildings on page load once
     useEffect(() => {
-        
+        axios.get(apiURL)
+        .then(response => {
+            setBuildings(response.data)
+        })
+        .catch(apiError => { console.log(apiError) });
     }, [])
 
     /* -------------------------------------------------------------------------
