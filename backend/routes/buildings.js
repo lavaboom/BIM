@@ -19,7 +19,6 @@ const readBuildings = async () => {
     const buildingData = await fs.promises.readFile(buildingsFile, 'utf8');
     const rawData = JSON.parse(buildingData);
     let result = rawData['buildings'];
-    console.log(result);
     // remove the secret info in each elem
     result.forEach(element => {
         delete element.secretInformation;

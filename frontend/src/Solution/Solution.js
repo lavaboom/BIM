@@ -23,6 +23,7 @@ import { v4 as uuidv4 } from 'uuid';
 import axios from 'axios'
 // styles
 import './Solution.scss';
+import offline from './styles/assets/offline.svg'
 
 const Solution = () => {
 
@@ -31,26 +32,51 @@ const Solution = () => {
 
     // local states
     const [buildings, setBuildings] = useState([]);
+    // for filtering
+    const [buildingsOriginal, setBuildingsOriginal] = useState([]);
 
     // fetch buildings on page load once
     useEffect(() => {
         axios.get(apiURL)
         .then(response => {
-            setBuildings(response.data)
+            setBuildings(response.data);
+            setBuildingsOriginal(response.data);
         })
         .catch(apiError => { console.log(apiError) });
     }, [])
+
+    // functionality for the search input
+    const search = (e) => {
+        let value = e.target.value.toLowerCase();
+        // start searching if input > 2
+        if (value.length > 2) {
+            const result = buildingsOriginal.filter(item => {
+                let searchData = item.company.toLowerCase();
+                return searchData.indexOf(value) > -1
+            })
+            setBuildings(result);
+        } else {
+            setBuildings(buildingsOriginal);
+        }
+    }
 
     /* -------------------------------------------------------------------------
     render
     ------------------------------------------------------------------------- */
     return (
-        <div>
+        buildings.length === 0 ? 
+        // UI for when there's no building to display
+        <div className='no-data'>
+            <img className='no-data__img' src={ offline } alt='Server offline' />
+            <p className='no-data__content'>Looks like server is offline</p>
+        </div>
+        : 
+        (<div>
             {/* headers area */}
             <div className='table-functionalities'>
                 <h1 className='table-functionalities__title'>All Buildings</h1>
                 <div className='table-functionalities__wrapper'>
-                    <input className='table-functionalities__search' onChange={ () => {} } type='text' placeholder='Search...' />
+                    <input className='table-functionalities__search' onChange={ search } type='text' placeholder='Search...' />
                 </div>
             </div>
             {/* table area */}
@@ -76,7 +102,7 @@ const Solution = () => {
                     </div>
                 ))}
             </div>
-        </div>
+        </div>)
     )
 }
 
