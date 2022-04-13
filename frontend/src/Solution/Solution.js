@@ -29,45 +29,6 @@ const Solution = () => {
     // use env variable if available else default to localhost
     const apiURL = process.env.REACT_APP_API_URL || 'http://localhost:9000/buildings/all'
 
-    let temp = [
-        {
-            'company': 'Green Dot LLC',
-            'address': '2842 Feathers Hooves Drive',
-            'city': 'New York',
-            'state': 'NY',
-        },
-        {
-            'company': 'Green Dot LLC',
-            'address': '3406 Point Street',
-            'city': 'Chicago',
-            'state': 'IL',
-        },
-        {
-            'company': 'Green Dot LLC',
-            'address': '4401 Lilac Lane',
-            'city': 'Alamo',
-            'state': 'GA',
-        },
-        {
-            'company': 'Red Triangle Inc',
-            'address': '1524 Ross Street',
-            'city': 'New Haven',
-            'state': 'IL',
-        },
-        {
-            'company': 'Red Triangle Inc',
-            'address': '3539 Glenwood Avenue',
-            'city': 'Beachwood',
-            'state': 'OH',
-        },
-        {
-            'company': 'Red Triangle Inc',
-            'address': '423 Stiles Street',
-            'city': 'Gibsonia',
-            'state': 'PA',
-        }
-    ]
-
     // local states
     const [buildings, setBuildings] = useState([]);
 
